@@ -9,6 +9,7 @@ config = {
     # send error emails to developers
     'send_mail_developer': True,
     'app_lang': 'en',
+    'namespace': 'superadmin',
     'super_admin': ['care4growth@gmail.com',
                     'sainisanjeet3@gmail.com',
                     'ballucorp@gmail.com',

@@ -22815,3 +22815,14 @@ textarea.input-custom {
   width: 150px;
   height: 150px;
 }
+
+.logo {
+  -o-box-shadow: -2px 2px 7px #555;
+  -icab-box-shadow: -2px 2px 7px #555;
+  -khtml-box-shadow: -2px 2px 7px #555;
+  -moz-box-shadow: -2px 2px 7px #555;
+  -webkit-box-shadow: -2px 2px 7px #555;
+  box-shadow: -2px 2px 7px #555;
+  background: #f9f1f161;
+  border-radius: 50%;
+}

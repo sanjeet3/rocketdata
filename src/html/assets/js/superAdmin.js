@@ -1,20 +1,63 @@
-function saveProduct() {
-  if (!$('#name').val()) {
-    showMSG('Please enter name of product', 'warning');
-    return;
-  }
-  if (!$('#price').val() || $('#price').val() == '0.0') {
-    showMSG('Please enter price of product', 'warning');
-    return;
-  }
-  if (!$('#category').val()) {
-    showMSG('Please enter category of product', 'warning');
-    return;
-  }
+function createDomain(){
+  var domain = $('#domain').val();
 
-  $('#save_product_spin').show();
-  postRequest('product_form', '/superadmin/SaveProduct', 'saveProductCallBack')
-};
+  if (!domain||domain.length<3) {
+    showMSG('Please enter valid domain', 'warning');
+    return;
+  }
+  if (!$('#company_title').val()) {
+    showMSG('Please enter company title', 'warning');
+    return;
+  }
+  if (!$('#admin_email').val()) {
+    showMSG('Please enter admin email', 'warning');
+    return;
+  }
+  
+  $('#save_spin').show();
+  postRequest('newdomainform', '/superadmin/AddDomain', 'createDomainCallBack')
+}
+
+function createDomainCallBack(obj, fi) {
+  if (obj.status == 'SUCCESS') {$('#'+fi)[0].reset();}
+  $('#save_spin').hide();
+}
+ 
+function userDomainSelectChange(elm){
+  console.log(elm.value);
+  if(!elm.value){return}
+  $('#msg_text').html('Loading domain details')
+  openDialog('#loading-popup');
+  getRequest('','/superadmin/GetDaomainData?domain='+elm.value,'userDomainSelectChangeCallBack');
+}
+
+function userDomainSelectChangeCallBack(obj){
+  closeDialog('#loading-popup');
+  $('#active_user').val(obj.data.active_user);
+  $('#user_count').val(obj.data.user_count);
+  $('#role option[value!=""]').remove(); 
+  for(var i=0; i<obj.data.role_list.length; i++){
+    $('#role').append($('<option>', {
+      value: obj.data.role_list[i]
+    }).text(obj.data.role_list[i]));
+  }
+}
+
+function createUserAccount(){
+  var domain = $('#domain').val();
+
+  if (!domain||domain.length<3) {
+    showMSG('Please select valid domain', 'warning');
+    return;
+  }
+  
+  if (!$('#email').val()) {
+    showMSG('Please enter user email', 'warning');
+    return;
+  }
+  postRequest('useraccountform' ,'/superadmin/AddUserAccount', null);
+}
+
 
 function saveProductCallBack(obj, fID) {
   $('#save_product_spin').hide();
